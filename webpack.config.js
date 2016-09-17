@@ -6,11 +6,11 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 webpackConfig = {
     context: __dirname,
     entry: {
-        bundle: './src/app.js',
+        bundle: path.join(__dirname, "src", "app.js"),
     },
     output: {
         filename: '[name].js',
-        path: './build',
+        path: path.join(__dirname, "build"),
         library: '[name]',
         publicPath: '/build'
     },
@@ -18,6 +18,7 @@ webpackConfig = {
         extensions: ['', '.js', '.jsx']
     },
     devtool: '#cheap-module-source-map',
+    devServer: { inline: true },
     module: {
         loaders: [
             {
@@ -30,7 +31,7 @@ webpackConfig = {
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+                loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
             },
             {
                 test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.png|\.jpe?g|\.gif$/,
